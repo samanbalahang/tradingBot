@@ -1,4 +1,3 @@
-# Ethereum
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -12,7 +11,7 @@ import time
 browser = webdriver.Chrome("chromedriver")
 browser.maximize_window()
 print("opening site please wait!...")
-browser.get("https://www.tradingview.com/symbols/ETHUSD/technicals/")
+browser.get("https://www.tradingview.com/symbols/LTCUSD/technicals/")
 time.sleep(10)
 while True:
     print("tick")
