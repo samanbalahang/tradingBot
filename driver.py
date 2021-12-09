@@ -8,9 +8,12 @@ from selenium.webdriver.common.keys import Keys
 import webbrowser
 import time
 class driver:    
-    def getAnalyse(self,address, sleeptime):
+    def getAnalyse(self,address, sleeptime,os):
         print("opening site please wait!...")
-        browser = webdriver.Chrome("chromedriver")
+        if(os == 1):
+         browser = webdriver.Chrome("chromedriver.exe")
+        else:
+         browser = webdriver.Chrome("chromedriver")    
         browser.maximize_window()
         address = "https://www.tradingview.com/symbols/"+address+"USD/technicals/"
         print(address)
@@ -19,6 +22,10 @@ class driver:
         while True:
             print("tick")
             print("opening site please wait!...")
+            try:
+              find_serial = browser.find_element_by_css_selector(".tv-card-container__ideas.tv-card-container__ideas--with-padding")
+            except:
+                print("S")
             find_serial = browser.find_element_by_css_selector("span.speedometerSignal-DPgs-R4s")
             print("eleman is find you can have signal now")
             print(find_serial.text)
@@ -35,3 +42,21 @@ class driver:
             else:
                 print("nutral") 
             time.sleep(sleeptime)
+    def getdata(self,cripto,os,sleep):
+        sleep = int(sleep)
+        if(cripto == '1'):
+            cripto = "BTC"
+            # print(cripto)
+        elif(cripto == "2"): 
+             cripto = "DOT" 
+            #  print(cripto)
+        elif(cripto == "3"):  
+            cripto = "LTC" 
+            # print(cripto)
+        elif(cripto == "4"):  
+            cripto = "ETH"  
+            # print(cripto)  
+        else:
+            print(cripto) 
+            # print("not validate")               
+        self.getAnalyse(driver,cripto,sleep,os)
