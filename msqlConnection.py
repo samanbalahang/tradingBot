@@ -5,6 +5,6 @@ class connecting:
         host="localhost",
         user="root",
         password="",
-        database="python_gram"
+        database="python_trading"
         )      
         return mydb

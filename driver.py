@@ -10,7 +10,8 @@ import datetime
 import time
 class driver:    
     def getAnalyse(self,address, sleeptime,os,child):
-        print(sleeptime)
+        cripto = address
+      
         child=child
         if(os == 1):
          browser = webdriver.Chrome("chromedriver.exe")
@@ -25,7 +26,6 @@ class driver:
         counter = 1
         while True:            
             print("OK!")
-            
             try:
              #path = "#technicals-root .technicalsTab-DPgs-R4s .tabs-3-f9q69b"  
               path = "#technicals-root .technicalsTab-DPgs-R4s .tabs-3-f9q69b button:"+child  
@@ -36,9 +36,10 @@ class driver:
             except:
                 print("")
             find_serial = browser.find_element_by_css_selector("span.speedometerSignal-DPgs-R4s")
-            signal = find_serial.text
+            
             print("you can have signal after 10 secound")
             time.sleep(10)
+            signal = find_serial.text
             if find_serial.text == 'SELL': 
                 print("SELL")
             elif find_serial.text == 'STRONG SELL': 
@@ -50,30 +51,40 @@ class driver:
             else:
                 print("nutral") 
             if(counter == 1):
-               print("inhere 1 !") 
                time.sleep(sleeptime)
             else: 
-               print("inhere!")  
                try:
+                curentprice =  browser.find_element_by_css_selector(".tv-symbol-price-quote__value.js-symbol-last")  
+                curentprice = curentprice.text 
+                print(curentprice)   
                 text = str(sleeptime) +" "
-                print(text)
                 text= text+str(datetime.datetime.now())+" "
-                print(text)
+                text= text+"UTC: "+str(datetime.datetime.utcnow())+" "
+                text= text+"price: "+str(curentprice)+" "
                 text = text+ str(signal)
-                print(text)
+                # print(text)
+                print("")
+                print("start again for next signal, don't need any action everey thing are automated!")
+                print("")
                except:
                 print("notext") 
                try:
-                   self.printTotxt(driver,text)  
+                   self.printTotxt(driver,text,cripto,sleeptime)  
                except:
                    print("")
                sleeptime = int(sleeptime)         
                time.sleep(sleeptime)
             counter = counter + 1   
-    def printTotxt(self,text):
-        text_file = open("./data.txt", "a+")
-        text_file.write("\n")
-        text_file.write(text)
+    def printTotxt(self,text,address,sleeptime):
+        # text_file = open("./data.txt", "a+")
+        try:
+            sleeptime=str(sleeptime)
+            print(address)
+            text_file = open("./"+address+"-"+sleeptime+".txt", "a+")
+            text_file.write("\n")
+            text_file.write(text)
+        except:
+            print("we coudent create file to save report on it:")    
                     
     def getdata(self,cripto,os,sleep):
         if(sleep == '1'):
@@ -107,7 +118,7 @@ class driver:
             child = "nth-child(10)"
             sleep = int(60*60*12*30)     
         sleep = int(sleep)
-        print("we will check: "+cripto)          
+        print("we will check: "+cripto+" every "+ sleep+" seconds:")          
         self.getAnalyse(driver,cripto,sleep,os,child)
     def printWhatIneed(self):
         print("what is you'r operating system:")
