@@ -5,8 +5,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from msqlConnection import connecting
+import chromedriver_autoinstaller
+chromedriver_autoinstaller.install() 
 conn = connecting.conn()
 mycursor = conn.cursor()
 excutable = conn.cursor(dictionary=True)
@@ -21,7 +24,10 @@ class newdriver:
         if(sleeptime > 60):
             sleeptime = 60
         if(os == 1):
-         browser = webdriver.Chrome("chromedriver.exe")
+         
+        #  browser = webdriver.Chrome("chromedriver.exe")
+         browser = webdriver.Chrome()
+            
         else:
          browser = webdriver.Chrome("chromedriver")    
         browser.maximize_window()
@@ -102,7 +108,8 @@ class newdriver:
             text_file.write(text)
         except:
             print("we coudent create file to save report on it:")    
-                    
+
+   # تنظیم چالد و صدا زدن فانکشن بعدی
     def getdata(self,cripto,os,sleep):
         cripto= str(cripto)
         os = str(os)
@@ -140,6 +147,9 @@ class newdriver:
         sleep = int(sleep)
         print("we will check: "+str(cripto)+" every "+ str(sleep)+" seconds:")          
         self.getAnalyse(newdriver,cripto,sleep,os,child)
+
+
+        # فانکشن خواسته های نرم افزار که با اجرای این فایل اجرا میشه
     def printWhatIneed(self):
         print("what is you'r operating system:")
         print("please just put number")
@@ -506,7 +516,14 @@ class newdriver:
 
 
 
-newdriver.printWhatIneed(newdriver)
+# newdriver.printWhatIneed(newdriver)
+
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
+driver = webdriver.Chrome()
+driver.get("https://www.google.com/")
+# driver.quit()
+
 # browser = webdriver.Chrome("chromedriver")    
 # browser.maximize_window()
 # address = "https://www.tradingview.com/symbols/BTCUSD/technicals/"
